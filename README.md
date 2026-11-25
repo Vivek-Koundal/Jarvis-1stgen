@@ -7,11 +7,10 @@ Text mode works without an API key; voice and Meta tool selection are optional.
 
 ## Requirements
 
-- Python 3.11 or newer
-- For terminal voice mode: a microphone, `MODEL_API_KEY`, and the audio
-  packages in `requirements-voice.txt`
+- Windows and Python 3.11 (recommended for the pinned lock files)
+- A microphone and `MODEL_API_KEY` for terminal voice mode
 - For overlay wake-word listening: a microphone, `PICOVOICE_ACCESS_KEY`, and
-  the audio packages in `requirements-voice.txt`
+  the voice dependencies
 - For Meta Model API tool selection: a Meta Model API key and the packages in
   `requirements.txt`
 - For the floating overlay: Tkinter (included with standard Windows Python)
@@ -19,40 +18,124 @@ Text mode works without an API key; voice and Meta tool selection are optional.
   listed in `requirements.txt`. Brightness support depends on the display.
 - Battery and CPU status tools require `psutil`.
 
-Create a virtual environment and install the main runtime dependencies:
+## Quick start (Windows PowerShell)
+
+> **Important:** Installing dependencies does not start Jarvis or create API
+> credentials. Follow each step below; the default text mode needs no API key.
+
+1. **Install Python 3.11.** Use the regular Windows installer, and include
+   Tcl/Tk if you want to use the floating overlay. After installation, verify
+   that the Python launcher can find it:
+
+```powershell
+py -3.11 --version
+```
+
+**Why:** Python runs Jarvis, and Python 3.11 matches the checked-in lock files.
+Tkinter/Tcl is needed only for the floating overlay.
+
+2. **Clone the repository.**
+
+```powershell
+git clone https://github.com/koundalvivek073-dotcom/Jarvis-1stgen.git
+```
+
+**Why:** This downloads the project source and setup files to your computer.
+
+3. **Move into the project folder.**
+
+```powershell
+cd Jarvis-1stgen
+```
+
+**Why:** The install and run commands need to be executed from the folder
+containing `main.py` and the requirements files.
+
+4. **Create a virtual environment.**
 
 ```powershell
 py -3.11 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
 ```
 
-For an exact install matching the checked-in Python 3.11 Windows snapshot,
-use `requirements.lock` instead. For voice features, install the voice
-manifest (or its complete pinned snapshot):
+**Why:** This creates an isolated Python environment for Jarvis so its
+packages do not affect other Python projects.
+
+5. **Activate the virtual environment.**
 
 ```powershell
-python -m pip install -r requirements-voice.txt
-# Or use the voice-enabled lock file:
+.\.venv\Scripts\Activate.ps1
+```
+
+**Why:** The `python` and `pip` commands in this PowerShell window will now use
+Jarvis's isolated environment. Activate it again whenever you open a new
+terminal.
+
+6. **Install all pinned Python dependencies, including voice packages.**
+
+```powershell
 python -m pip install -r requirements-voice.lock
 ```
 
-`requirements-voice.txt` includes the main manifest and the additional
-microphone/audio packages. See [DEPENDENCIES.md](DEPENDENCIES.md) for what pip
-installs versus what is supplied by Python or Windows.
+**Why:** This lock file includes both the base and voice dependencies at the
+tested versions. It installs packages only; it does not install Python,
+Windows components, or browser applications.
 
-Copy `.env.example` to `.env_local` and uncomment/fill only the settings for
-features you plan to use. `.env_local` is ignored by Git; do not commit real
-credentials. Text/local-parser mode needs no API key.
-
-On Python 3.14, PyAudio may need Microsoft C++ Build Tools if pip cannot find a
-compatible prebuilt wheel. Text and Meta mode do not require PyAudio.
-
-Text assistant (no API keys or extra packages):
+7. **Start Jarvis in text mode.**
 
 ```powershell
 python main.py
 ```
+
+**Why:** This starts the local text assistant. It does not need an API key;
+type `help` to see commands, or `exit` to quit.
+
+### Enable Meta model features (optional)
+
+1. **Create your local settings file.**
+
+```powershell
+Copy-Item .env.example .env_local
+notepad .env_local
+```
+
+**Why:** `.env.example` is a safe template. In `.env_local`, uncomment
+`MODEL_API_KEY` and replace its placeholder with your own key. Do not share or
+commit that key; `.env_local` is ignored by Git.
+
+2. **Start Jarvis with Meta model tool selection.**
+
+```powershell
+python main.py --llm
+```
+
+**Why:** `--llm` enables requests to the configured Meta-compatible model API.
+Requests and any content you approve for model use are sent to that provider.
+
+3. **For terminal voice mode, use the voice flag as well.**
+
+```powershell
+python main.py --voice --llm
+```
+
+**Why:** `--voice` enables microphone input and speech output; `--llm` uses the
+configured model and speech transcription. A working microphone and
+`MODEL_API_KEY` are required.
+
+For overlay wake-word listening, also configure `PICOVOICE_ACCESS_KEY` in
+`.env_local`, then start the overlay:
+
+```powershell
+python main.py --llm --overlay
+```
+
+**Why:** The overlay provides the floating interface; the **Wake** control
+uses the Picovoice key to start local wake-word detection.
+
+See [DEPENDENCIES.md](DEPENDENCIES.md) for the distinction between pip
+packages and components supplied by Python or Windows.
+
+On Python 3.14, PyAudio may need Microsoft C++ Build Tools if pip cannot find a
+compatible prebuilt wheel. Text and Meta mode do not require PyAudio.
 
 Voice assistant (push-to-talk, Meta speech transcription, and Windows speech
 output):
