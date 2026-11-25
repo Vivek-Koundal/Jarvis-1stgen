@@ -121,15 +121,16 @@ python main.py --voice --llm
 configured model and speech transcription. A working microphone and
 `MODEL_API_KEY` are required.
 
-For overlay wake-word listening, also configure `PICOVOICE_ACCESS_KEY` in
-`.env_local`, then start the overlay:
+4. **Start the floating overlay (optional).**
 
 ```powershell
 python main.py --llm --overlay
 ```
 
-**Why:** The overlay provides the floating interface; the **Wake** control
-uses the Picovoice key to start local wake-word detection.
+**Why:** `--llm` enables model features and `--overlay` opens the floating
+window. To use screen control, also set a supported `MODEL_API_VISION_MODEL`
+in `.env_local`. To use the **Wake** control, configure
+`PICOVOICE_ACCESS_KEY` there as well.
 
 See [DEPENDENCIES.md](DEPENDENCIES.md) for the distinction between pip
 packages and components supplied by Python or Windows.
