@@ -1,0 +1,5 @@
+-r requirements.txt
+PyAudio>=0.2.14,<0.3
+requests>=2.31,<3
+scipy>=1.11,<2
+sounddevice>=0.4.6,<1

@@ -1,0 +1,15 @@
+.venv*/
+venv/
+__pycache__/
+*.py[cod]
+*.log
+.pytest_cache/
+.mypy_cache/
+build/
+dist/
+*.egg-info/
+assistant.log
+.env*
+!.env.example
+edge_profile/
+jarvis_edge_data/
