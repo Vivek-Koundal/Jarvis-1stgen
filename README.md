@@ -43,6 +43,15 @@ cd Jarvis-1stgen
 
 **Why:** This downloads the project source and setup files to your computer.
 
+If cloning fails with an SSL error, try setting Git to use OpenSSL, then retry
+the clone:
+
+```powershell
+git config --global http.sslBackend openssl
+```
+
+This changes the SSL backend for Git across your user account.
+
 3. **Create a virtual environment.**
 
 ```powershell
