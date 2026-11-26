@@ -34,24 +34,16 @@ py -3.11 --version
 **Why:** Python runs Jarvis, and Python 3.11 matches the checked-in lock files.
 Tkinter/Tcl is needed only for the floating overlay.
 
-2. **Clone the repository.**
+2. **Clone the repository and move into the project folder.**
 
 ```powershell
 git clone https://github.com/koundalvivek073-dotcom/Jarvis-1stgen.git
+cd Jarvis-1stgen
 ```
 
 **Why:** This downloads the project source and setup files to your computer.
 
-3. **Move into the project folder.**
-
-```powershell
-cd Jarvis-1stgen
-```
-
-**Why:** The install and run commands need to be executed from the folder
-containing `main.py` and the requirements files.
-
-4. **Create a virtual environment.**
+3. **Create a virtual environment.**
 
 ```powershell
 py -3.11 -m venv .venv
@@ -60,7 +52,7 @@ py -3.11 -m venv .venv
 **Why:** This creates an isolated Python environment for Jarvis so its
 packages do not affect other Python projects.
 
-5. **Activate the virtual environment.**
+4. **Activate the virtual environment.**
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
@@ -70,7 +62,7 @@ packages do not affect other Python projects.
 Jarvis's isolated environment. Activate it again whenever you open a new
 terminal.
 
-6. **Install all pinned Python dependencies, including voice packages.**
+5. **Install all pinned Python dependencies, including voice packages.**
 
 ```powershell
 python -m pip install -r requirements-voice.lock
@@ -80,7 +72,7 @@ python -m pip install -r requirements-voice.lock
 tested versions. It installs packages only; it does not install Python,
 Windows components, or browser applications.
 
-7. **Start Jarvis in text mode.**
+6. **Start Jarvis in text mode.**
 
 ```powershell
 python main.py
